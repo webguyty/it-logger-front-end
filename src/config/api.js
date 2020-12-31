@@ -1,3 +1,3 @@
-const API = 'api.webguyty.com/itLogger';
+const API = 'http://api.webguyty.com/itLogger';
 
 export default API

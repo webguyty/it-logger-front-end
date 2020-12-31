@@ -17,6 +17,8 @@ export const getLogs = () => async (dispatch) => {
   try {
     setLoading();
     const res = await fetch(`${API}/logs`);
+    // const res = await fetch(`http://api.webguyty.com/itLogger/logs`);
+    console.log(res);
     const data = await res.json();
 
     dispatch({
