@@ -10,11 +10,13 @@ import {
   SEARCH_LOGS,
 } from './types';
 
+import API from '../config/api'
+
 // Get logs from server
 export const getLogs = () => async (dispatch) => {
   try {
     setLoading();
-    const res = await fetch('api.webguyty.com/itLogger/logs');
+    const res = await fetch(`${API}/logs`);
     const data = await res.json();
 
     dispatch({
@@ -22,7 +24,8 @@ export const getLogs = () => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    dispatch({ type: LOGS_ERROR, payload: err.response.statusText });
+    // dispatch({ type: LOGS_ERROR, payload: err.response.statusText });
+    dispatch({ type: LOGS_ERROR, payload: err});
   }
 };
 
@@ -30,7 +33,7 @@ export const getLogs = () => async (dispatch) => {
 export const addLog = (log) => async (dispatch) => {
   try {
     setLoading();
-    const res = await fetch('/api/logs', {
+    const res = await fetch(`${API}/logs`, {
       method: 'POST',
       body: JSON.stringify(log),
       headers: {
@@ -53,7 +56,7 @@ export const deleteLog = (id) => async (dispatch) => {
   try {
     setLoading();
 
-    await fetch(`api/logs/${id}`, {
+    await fetch(`${API}/logs/${id}`, {
       method: 'DELETE',
     });
 
@@ -62,7 +65,8 @@ export const deleteLog = (id) => async (dispatch) => {
       payload: id,
     });
   } catch (err) {
-    dispatch({ type: LOGS_ERROR, payload: err.response.statusText });
+    // dispatch({ type: LOGS_ERROR, payload: err.response.statusText });
+    dispatch({ type: LOGS_ERROR, payload: err.response.message });
   }
 };
 
@@ -71,7 +75,7 @@ export const updateLog = (log) => async (dispatch) => {
   try {
     setLoading();
 
-    const res = await fetch(`/api/logs/${log._id}`, {
+    const res = await fetch(`${API}/logs/${log._id}`, {
       method: 'PUT',
       body: JSON.stringify(log),
       headers: {
@@ -93,7 +97,7 @@ export const updateLog = (log) => async (dispatch) => {
 export const searchLogs = (text) => async (dispatch) => {
   try {
     setLoading();
-    const res = await fetch(`api/logs/search/${text}`);
+    const res = await fetch(`${API}/logs/search/${text}`);
     const data = await res.json();
 
     dispatch({

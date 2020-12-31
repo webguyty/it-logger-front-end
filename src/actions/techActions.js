@@ -6,11 +6,13 @@ import {
   TECHS_ERROR,
 } from './types';
 
+import API from '../config/api'
+
 // Get techs from Server
 export const getTechs = () => async (dispatch) => {
   try {
     setLoading();
-    const res = await fetch('/api/techs');
+    const res = await fetch(`${API}/techs`);
     const data = await res.json();
 
     dispatch({
@@ -18,7 +20,8 @@ export const getTechs = () => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    dispatch({ type: TECHS_ERROR, payload: err.response.statusText });
+    dispatch({ type: TECHS_ERROR, payload: err});
+    // dispatch({ type: TECHS_ERROR, payload: err.response.statusText });
   }
 };
 
@@ -26,7 +29,7 @@ export const getTechs = () => async (dispatch) => {
 export const addTech = (tech) => async (dispatch) => {
   try {
     setLoading();
-    const res = await fetch('/api/techs', {
+    const res = await fetch(`${API}/techs`, {
       method: 'POST',
       body: JSON.stringify(tech),
       headers: { 'Content-Type': 'application/json' },
@@ -46,7 +49,7 @@ export const addTech = (tech) => async (dispatch) => {
 export const deleteTech = (id) => async (dispatch) => {
   try {
     setLoading();
-    await fetch(`/api/techs/${id}`, {
+    await fetch(`${API}/techs/${id}`, {
       method: 'DELETE',
     });
 
